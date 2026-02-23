@@ -1,0 +1,82 @@
+<div class="container">
+  <h1>{{ isEditMode ? 'עריכת משימה' : 'משימה חדשה' }}</h1>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+    <div class="form-group">
+      <label for="title">כותרת *</label>
+      <input 
+        id="title" 
+        type="text" 
+        formControlName="Title" 
+        class="form-control"
+        [class.error]="taskForm.get('Title')?.invalid && taskForm.get('Title')?.touched">
+      <div *ngIf="taskForm.get('Title')?.invalid && taskForm.get('Title')?.touched" class="error-message">
+        שדה חובה
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">תיאור *</label>
+      <textarea 
+        id="description" 
+        formControlName="Description" 
+        rows="4" 
+        class="form-control"
+        [class.error]="taskForm.get('Description')?.invalid && taskForm.get('Description')?.touched">
+      </textarea>
+      <div *ngIf="taskForm.get('Description')?.invalid && taskForm.get('Description')?.touched" class="error-message">
+        שדה חובה
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="status">סטטוס *</label>
+      <select 
+        id="status" 
+        formControlName="StatusId" 
+        class="form-control"
+        [class.error]="taskForm.get('StatusId')?.invalid && taskForm.get('StatusId')?.touched">
+        <option value="">בחר סטטוס</option>
+        <option *ngFor="let status of statuses" [value]="status.Id">
+          {{ status.Name }}
+        </option>
+      </select>
+      <div *ngIf="taskForm.get('StatusId')?.invalid && taskForm.get('StatusId')?.touched" class="error-message">
+        שדה חובה
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">קטגוריה *</label>
+      <select 
+        id="category" 
+        formControlName="CategoryId" 
+        class="form-control"
+        [class.error]="taskForm.get('CategoryId')?.invalid && taskForm.get('CategoryId')?.touched">
+        <option value="">בחר קטגוריה</option>
+        <option *ngFor="let category of categories" [value]="category.Id">
+          {{ category.Name }}
+        </option>
+      </select>
+      <div *ngIf="taskForm.get('CategoryId')?.invalid && taskForm.get('CategoryId')?.touched" class="error-message">
+        שדה חובה
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dueDate">תאריך יעד</label>
+      <input 
+        id="dueDate" 
+        type="date" 
+        formControlName="DueDate" 
+        class="form-control">
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="taskForm.invalid" class="btn-submit">
+        {{ isEditMode ? 'עדכן' : 'צור' }}
+      </button>
+      <button type="button" (click)="cancel()" class="btn-cancel">ביטול</button>
+    </div>
+  </form>
+</div>

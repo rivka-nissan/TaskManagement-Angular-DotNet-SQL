@@ -1,0 +1,40 @@
+<div class="container" *ngIf="task">
+  <h1>פרטי משימה</h1>
+
+  <div class="task-details">
+    <div class="detail-row">
+      <span class="label">כותרת:</span>
+      <span class="value">{{ task.Title }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">תיאור:</span>
+      <span class="value">{{ task.Description }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">סטטוס:</span>
+      <span class="value">{{ task.StatusName }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">קטגוריה:</span>
+      <span class="value">{{ task.CategoryName }}</span>
+    </div>
+
+    <div class="detail-row">
+      <span class="label">תאריך יצירה:</span>
+      <span class="value">{{ task.CreatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+
+    <div class="detail-row" *ngIf="task.DueDate">
+      <span class="label">תאריך יעד:</span>
+      <span class="value">{{ task.DueDate | date:'dd/MM/yyyy' }}</span>
+    </div>
+
+    <div class="actions">
+      <button (click)="editTask()" class="btn-edit">עריכה</button>
+      <button (click)="goBack()" class="btn-back">חזרה לרשימה</button>
+    </div>
+  </div>
+</div>

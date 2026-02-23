@@ -1,0 +1,40 @@
+<div class="container">
+  <h1>ניהול משימות</h1>
+  
+  <div class="search-bar">
+    <input 
+      type="text" 
+      [(ngModel)]="searchText" 
+      (input)="onSearch()" 
+      placeholder="חפש משימה..."
+      class="search-input">
+    <button (click)="addTask()" class="btn-add">הוסף משימה</button>
+  </div>
+
+  <table class="tasks-table">
+    <thead>
+      <tr>
+        <th>כותרת</th>
+        <th>תיאור</th>
+        <th>סטטוס</th>
+        <th>קטגוריה</th>
+        <th>תאריך יצירה</th>
+        <th>פעולות</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let task of filteredTasks">
+        <td>{{ task.Title }}</td>
+        <td>{{ task.Description }}</td>
+        <td>{{ task.StatusName }}</td>
+        <td>{{ task.CategoryName }}</td>
+        <td>{{ task.CreatedAt | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <button (click)="viewTask(task.Id)" class="btn-view">צפייה</button>
+          <button (click)="editTask(task.Id)" class="btn-edit">עריכה</button>
+          <button (click)="deleteTask(task.Id)" class="btn-delete">מחיקה</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
