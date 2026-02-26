@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using System.Data;
 
@@ -26,7 +26,16 @@ public class ExecController : ControllerBase
 					foreach (var param in request.Parameters)
 					{
 						string pName = param.Key.StartsWith("@") ? param.Key : "@" + param.Key;
-						cmd.Parameters.AddWithValue(pName, param.Value ?? DBNull.Value);
+
+	
+						object pValue = param.Value;
+						if (pValue is System.Text.Json.JsonElement element)
+						{
+							
+							pValue = element.ValueKind == System.Text.Json.JsonValueKind.String ? element.GetString() : element.GetRawText();
+						}
+
+						cmd.Parameters.AddWithValue(pName, pValue ?? DBNull.Value);
 					}
 				}
 
@@ -46,7 +55,7 @@ public class ExecController : ControllerBase
 					rows.Add(row);
 				}
 
-				return Ok(rows); // מחזירים את הרשימה הפשוטה
+				return Ok(rows); // 
 			}
 		}
 		catch (Exception ex)
